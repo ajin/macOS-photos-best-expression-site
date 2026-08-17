@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Support · Best Expression</title>
+<meta name="description" content="Setup, troubleshooting, and a person who answers email. Support for Best Expression, the face swap extension for Apple Photos.">
+<meta name="theme-color" content="#f5f1e8">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="assets/icon-64.png">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap masthead-inner">
+    <a class="wordmark" href="./"><img class="app-icon" src="assets/icon-64.png"
+      alt="" width="27" height="27"><span>Best Expression<em>.</em></span></a>
+    <nav class="nav" aria-label="Site">
+      <a href="./">Overview</a>
+      <a href="privacy.html">Privacy</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap page">
+  <h1>Support</h1>
+  <p class="updated">Setup, fixes, and a person who answers email</p>
+
+  <h2>First run</h2>
+  <ol>
+    <li>Launch <b>Best Expression</b> once. This registers the extension with
+    macOS; the app itself is just the front door.</li>
+    <li>Click <b>Grant Photo Library Access</b> when asked, or grant it later
+    when the extension asks from inside Photos.</li>
+    <li>In Photos, open a photo and click <b>Edit</b>, then the <b>•••</b>
+    button in the top right toolbar, then <b>Best Expression</b>.</li>
+  </ol>
+
+  <h2>The extension is missing from the ••• menu</h2>
+  <ol>
+    <li>Make sure you launched the app at least once.</li>
+    <li>Open System Settings → General → Login Items &amp; Extensions →
+    <b>Photos Editing</b> and switch on Best Expression.</li>
+    <li>Quit Photos fully and reopen it. Photos reads its extension list at
+    launch.</li>
+  </ol>
+
+  <h2>&#8220;No other shots found&#8221;</h2>
+  <p>The search looks for photos taken near the same moment. Widen the search
+  window in the sidebar (it reaches out to six hours), or click <b>Add From
+  Library…</b> and hand-pick any shots of the same person. Photos stored in
+  iCloud download on demand, so a slow connection makes the first scan take
+  longer.</p>
+
+  <h2>A face won't match across shots</h2>
+  <p>The matcher needs the same person at a roughly similar position and size.
+  Add references taken closer in time, or use Add From Library… and pick the
+  shots yourself. If a face never got detected at all, right-click it and
+  choose <b>Add Face Here</b>.</p>
+
+  <h2>Live Photos</h2>
+  <p>Saving an edit keeps the edited still and switches off the motion, as
+  with every third-party Photos editor. <b>Revert to Original</b> brings the
+  motion back. Duplicate the photo in Photos before editing if you want a
+  moving copy and an edited copy side by side.</p>
+
+  <h2>Undo everything</h2>
+  <p>Edits are non-destructive. In Photos: <b>Image → Revert to Original</b>.
+  The untouched shot comes back, whenever, always.</p>
+
+  <h2>Requirements</h2>
+  <p>macOS 14 or later on an Apple silicon Mac. Everything runs on device
+  with no network connections; see the <a href="privacy.html">privacy
+  policy</a>, which fits on a postcard.</p>
+
+  <h2>Report a bug</h2>
+  <p>Write what you clicked, what you expected, and what happened instead,
+  plus your macOS version. Screenshots help. Send nothing you would mind a
+  stranger seeing; a screenshot of the sliders is plenty, the photo itself is
+  rarely needed.</p>
+
+  <div class="contact-card">
+    <span class="mono">Email</span>
+    <!-- PLACEHOLDER: the support address. Replace both the mailto and the
+         visible text, then update nothing else; privacy.html points here. -->
+    <p class="addr"><a href="mailto:support@example.com">support@example.com</a>
+    <span class="placeholder">← placeholder until the mailbox exists</span></p>
+    <p class="muted" style="margin-top:10px">Replies usually land within two
+    days. It is one person answering, and the same person who wrote the app.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="colophon">
+      <span>© 2026 Ajin Man Tuladhar. Photos, Mac and Live Photos are
+      trademarks of Apple Inc.</span>
+      <span>No cookies, no analytics on this page</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Best Expression · Face swap for group photos, inside Apple Photos</title>
+<meta name="description" content="Someone always blinks. The good take is sitting in the next shot over. Click their face and swap it in, right inside Photos. Everything stays on your Mac.">
+<meta name="theme-color" content="#f5f1e8">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="assets/icon-64.png">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<!-- PLACEHOLDER: Open Graph image. Drop a 1200x630 PNG at assets/og.png and uncomment.
+<meta property="og:image" content="assets/og.png">
+-->
+<meta property="og:title" content="Best Expression · Face swap for group photos">
+<meta property="og:description" content="Click the blinked face, borrow the open eyes from the shot next to it, save the photo you meant to take. Inside Apple Photos, entirely on your Mac.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+<script>document.documentElement.className += " js";</script>
+</head>
+<body>
+
+<!-- Shared line-art: the same three people, drawn once. Each "shot" reuses
+     this trio and lays its own eyes and mouths on top, because the five
+     frames really are the same scene a few seconds apart. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <g id="trio" fill="none" stroke="#171512" stroke-width="2.2" stroke-linecap="round">
+      <!-- left: glasses -->
+      <path d="M 22 180 C 26 150 44 137 65 137 C 86 137 104 151 108 180"/>
+      <ellipse cx="64" cy="96" rx="27" ry="31"/>
+      <path d="M 39 86 Q 38 56 64 55 Q 90 56 89 86 Q 83 66 64 66 Q 45 66 39 86 Z" fill="#171512" stroke="none"/>
+      <circle cx="52.5" cy="97" r="9.5"/>
+      <circle cx="75.5" cy="97" r="9.5"/>
+      <path d="M 62 97 L 66 97 M 43 96 L 38 94 M 85 96 L 90 94"/>
+      <!-- middle: bob -->
+      <path d="M 90 180 C 94 148 109 135 128 135 C 147 135 162 148 166 180"/>
+      <ellipse cx="128" cy="92" rx="25" ry="29"/>
+      <path d="M 101 92 C 98 56 158 56 155 92 C 154 72 146 63 128 63 C 110 63 102 72 101 92 Z" fill="#171512" stroke="none"/>
+      <!-- right: curls, shorter -->
+      <path d="M 154 180 C 158 157 171 146 188 146 C 205 146 217 157 221 180"/>
+      <ellipse cx="188" cy="110" rx="22" ry="25"/>
+      <path d="M 167 104 A 8 8 0 0 1 176 92 A 10 10 0 0 1 189 86 A 10 10 0 0 1 202 93 A 8 8 0 0 1 209 105" />
+    </g>
+
+    <!-- expression parts, positioned per person -->
+    <g id="a-open"><circle cx="52.5" cy="97" r="2.1" fill="#171512"/><circle cx="75.5" cy="97" r="2.1" fill="#171512"/></g>
+    <g id="a-away"><circle cx="50" cy="97.6" r="2.1" fill="#171512"/><circle cx="73" cy="97.6" r="2.1" fill="#171512"/></g>
+    <g id="a-shut" fill="none" stroke="#171512" stroke-width="2" stroke-linecap="round"><path d="M 48 97 Q 52.5 101 57 97"/><path d="M 71 97 Q 75.5 101 80 97"/></g>
+    <g id="a-smile"><path d="M 55 113 Q 64 120 73 113" fill="none" stroke="#171512" stroke-width="2.2" stroke-linecap="round"/></g>
+    <g id="a-flat"><path d="M 57 114 L 71 114" fill="none" stroke="#171512" stroke-width="2.2" stroke-linecap="round"/></g>
+    <g id="a-talk"><ellipse cx="64" cy="115" rx="5" ry="6.5" fill="none" stroke="#171512" stroke-width="2.2"/></g>
+
+    <g id="b-open"><circle cx="119" cy="90" r="2.1" fill="#171512"/><circle cx="137" cy="90" r="2.1" fill="#171512"/></g>
+    <g id="b-shut" fill="none" stroke="#171512" stroke-width="2" stroke-linecap="round"><path d="M 114.5 90 Q 119 94.5 123.5 90"/><path d="M 132.5 90 Q 137 94.5 141.5 90"/></g>
+    <g id="b-smile"><path d="M 119 109 Q 128 116 137 109" fill="none" stroke="#171512" stroke-width="2.2" stroke-linecap="round"/></g>
+    <g id="b-grin" fill="none" stroke="#171512" stroke-width="2.2" stroke-linecap="round"><path d="M 116.5 107 Q 128 118 139.5 107"/><path d="M 121 112.5 Q 128 116.5 135 112.5"/></g>
+    <g id="b-flat"><path d="M 121 110 L 135 110" fill="none" stroke="#171512" stroke-width="2.2" stroke-linecap="round"/></g>
+
+    <g id="c-open"><circle cx="180.5" cy="106" r="2" fill="#171512"/><circle cx="195.5" cy="106" r="2" fill="#171512"/></g>
+    <g id="c-away"><circle cx="183" cy="106.6" r="2" fill="#171512"/><circle cx="198" cy="106.6" r="2" fill="#171512"/></g>
+    <g id="c-shut" fill="none" stroke="#171512" stroke-width="2" stroke-linecap="round"><path d="M 176.5 106 Q 180.5 109.8 184.5 106"/><path d="M 191.5 106 Q 195.5 109.8 199.5 106"/></g>
+    <g id="c-smile"><path d="M 181 122 Q 188 128 195 122" fill="none" stroke="#171512" stroke-width="2.2" stroke-linecap="round"/></g>
+    <g id="c-laugh"><ellipse cx="188" cy="124" rx="5.5" ry="6" fill="none" stroke="#171512" stroke-width="2.2"/></g>
+    <g id="c-flat"><path d="M 182 123 L 194 123" fill="none" stroke="#171512" stroke-width="2.2" stroke-linecap="round"/></g>
+  </defs>
+</svg>
+
+<header class="masthead">
+  <div class="wrap masthead-inner">
+    <a class="wordmark" href="./"><img class="app-icon" src="assets/icon-64.png"
+      alt="" width="27" height="27"><span>Best Expression<em>.</em></span></a>
+    <nav class="nav" aria-label="Site">
+      <a href="#how">How it works</a>
+      <a href="#blend" class="hide-sm">The blend</a>
+      <a href="#privacy" class="hide-sm">Privacy</a>
+      <a href="#faq">FAQ</a>
+      <a href="#get" class="btn btn-ghost">Get it</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ============================================= hero -->
+<section class="hero">
+  <div class="wrap">
+    <p class="kicker" style="margin-bottom:22px">Face swap for group photos</p>
+    <h1>Someone <em>always</em> blinks.</h1>
+    <div class="hero-lead">
+        <p class="hero-dek">The best smile lands in shot two, the open eyes in
+        shot four; the photo you wanted is <span class="mark">spread across
+        five files</span>. Best Expression is a face swap extension inside
+        Apple Photos on your Mac: click the blinked face, borrow that person's better take
+        from a shot seconds away, and save the photo you meant to take.
+        <strong>Every pixel comes from your own shots. Nothing leaves your
+        Mac.</strong></p>
+        <div class="hero-ctas">
+          <div class="hero-cta">
+            <!-- PLACEHOLDER: App Store link. Replace href="#" with the real URL,
+                 e.g. https://apps.apple.com/app/idXXXXXXXXXX. While href stays "#",
+                 clicking shows the not-live-yet notice instead of jumping. -->
+            <a class="btn btn-primary" id="store-link" href="#"
+               data-wait="Not on the store yet · soon">
+              <span class="label">Get it on the Mac App Store</span>
+              <span class="arrow" aria-hidden="true">→</span>
+            </a>
+            <a class="link-more" href="#how">See how it works <span aria-hidden="true">›</span></a>
+          </div>
+          <p class="cta-note">Headed to the Mac App Store. This button goes live with the listing.</p>
+        </div>
+    </div>
+
+    <!-- the contact sheet -->
+    <div class="sheet" role="img" aria-label="Five frames of the same group photo, seconds apart. Someone has their eyes shut in each frame. In the fourth frame the middle person finally has open eyes and a real smile, circled in red pencil.">
+        <div class="sheet-track">
+          <figure class="shot">
+            <svg viewBox="0 0 240 180"><use href="#trio"/><use href="#a-open"/><use href="#a-smile"/><use href="#b-shut"/><use href="#b-smile"/><use href="#c-open"/><use href="#c-smile"/></svg>
+            <figcaption><span>IMG_4019</span><span class="flag">one blink</span></figcaption>
+          </figure>
+          <figure class="shot">
+            <svg viewBox="0 0 240 180"><use href="#trio"/><use href="#a-away"/><use href="#a-flat"/><use href="#b-open"/><use href="#b-smile"/><use href="#c-shut"/><use href="#c-laugh"/></svg>
+            <figcaption><span>IMG_4020</span><span>14:02:10</span></figcaption>
+          </figure>
+          <figure class="shot">
+            <svg viewBox="0 0 240 180"><use href="#trio"/><use href="#a-shut"/><use href="#a-talk"/><use href="#b-open"/><use href="#b-flat"/><use href="#c-open"/><use href="#c-smile"/></svg>
+            <figcaption><span>IMG_4021</span><span>14:02:11</span></figcaption>
+          </figure>
+          <figure class="shot is-pick" data-inview>
+            <svg viewBox="0 0 240 180">
+              <use href="#trio"/><use href="#a-away"/><use href="#a-flat"/><use href="#b-open"/><use href="#b-grin"/><use href="#c-away"/><use href="#c-flat"/>
+              <path class="pencil" pathLength="100" d="M 160 64 C 148 46 104 46 95 70 C 86 94 96 126 127 129 C 158 132 170 106 164 82 C 160 68 152 59 143 57"/>
+            </svg>
+            <figcaption><span>IMG_4022</span><span class="flag">borrow the face</span></figcaption>
+          </figure>
+          <figure class="shot">
+            <svg viewBox="0 0 240 180"><use href="#trio"/><use href="#a-open"/><use href="#a-smile"/><use href="#b-shut"/><use href="#b-flat"/><use href="#c-open"/><use href="#c-smile"/></svg>
+            <figcaption><span>IMG_4023</span><span>14:02:14</span></figcaption>
+          </figure>
+        </div>
+      </div>
+  </div>
+
+  <!-- spec strip -->
+  <div class="specs">
+    <div class="wrap">
+      <dl class="specs-inner">
+        <div class="spec"><dt>System</dt><dd>macOS 14 or later</dd></div>
+        <div class="spec"><dt>Chip</dt><dd>Apple silicon</dd></div>
+        <div class="spec"><dt>Lives in</dt><dd>Photos → Edit → •••</dd></div>
+        <div class="spec"><dt>Network code</dt><dd>None</dd></div>
+        <div class="spec"><dt>Price</dt><dd>Once. No subscription.</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================= 02 how it works -->
+<section class="section" id="how">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="kicker">How it works</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <span class="num">Step 01</span>
+        <h3>Open the shot</h3>
+        <p>Any photo already in your library. In Photos: <b>Edit</b>, then the
+        <b>•••</b> button top right, then <b>Best Expression</b>. Installing is
+        the same motion as Pixelmator or Affinity: launch the app once and the
+        extension registers itself.</p>
+        <div class="step-art" aria-hidden="true">
+          <svg viewBox="0 0 250 110" fill="none" stroke="#171512" stroke-width="2" stroke-linecap="round">
+            <rect x="8" y="14" width="234" height="34" rx="8"/>
+            <circle cx="176" cy="31" r="2.4" fill="#171512" stroke="none"/>
+            <circle cx="186" cy="31" r="2.4" fill="#171512" stroke="none"/>
+            <circle cx="196" cy="31" r="2.4" fill="#171512" stroke="none"/>
+            <rect x="158" y="18" width="56" height="26" rx="6" stroke="#d8451c"/>
+            <path d="M 190 52 L 190 66" stroke="#d8451c"/>
+            <rect x="100" y="66" width="142" height="30" rx="6"/>
+            <text x="113" y="85" class="svg-note">Best Expression</text>
+            <path d="M 86 88 l 10 -5 l -3 9 l 9 3 z" fill="#171512" stroke="none" transform="rotate(14 92 88)"/>
+          </svg>
+        </div>
+      </div>
+      <div class="step">
+        <span class="num">Step 02</span>
+        <h3>Click a face</h3>
+        <p>Every face gets an outline. Click one and the extension finds that
+        person's other takes in shots from the same moment, scores them for
+        sharpness, open eyes and smile, and lines them up <b>best first</b>.
+        Frames inside Live Photos count too.</p>
+        <div class="step-art" aria-hidden="true">
+          <svg viewBox="0 0 250 110" fill="none" stroke="#171512" stroke-width="2" stroke-linecap="round">
+            <path d="M 34 12 h -14 v 14 M 96 12 h 14 v 14 M 34 66 h -14 v -14 M 96 66 h 14 v -14" stroke="#d8451c"/>
+            <circle cx="65" cy="39" r="22"/>
+            <circle cx="58" cy="36" r="1.9" fill="#171512" stroke="none"/>
+            <circle cx="72" cy="36" r="1.9" fill="#171512" stroke="none"/>
+            <path d="M 58 47 Q 65 52 72 47"/>
+            <rect x="138" y="16" width="30" height="30" rx="4" stroke="#d8451c"/>
+            <path d="M 147 27 Q 153 32 159 27" stroke="#d8451c"/>
+            <rect x="176" y="16" width="30" height="30" rx="4"/>
+            <path d="M 185 29 L 197 29"/>
+            <rect x="214" y="16" width="30" height="30" rx="4"/>
+            <path d="M 222 27 Q 229 24 236 27"/>
+            <text x="138" y="62" class="svg-note svg-note-red">98</text>
+            <text x="176" y="62" class="svg-note">71</text>
+            <text x="214" y="62" class="svg-note">44</text>
+          </svg>
+        </div>
+      </div>
+      <div class="step">
+        <span class="num">Step 03</span>
+        <h3>Pick the take</h3>
+        <p>One click blends it in: the face is fitted, the colors are matched,
+        and the settings tune themselves in about a second. Nudge the sliders
+        if you want. <b>Save Changes</b> writes a full-quality edit that
+        <b>Revert to Original</b> can always undo.</p>
+        <div class="step-art" aria-hidden="true">
+          <svg viewBox="0 0 250 110" fill="none" stroke="#171512" stroke-width="2" stroke-linecap="round">
+            <path d="M 20 30 H 230"/><circle cx="150" cy="30" r="7" fill="#f5f1e8"/>
+            <path d="M 20 58 H 230"/><circle cx="92" cy="58" r="7" fill="#f5f1e8" stroke="#d8451c"/>
+            <path d="M 20 86 H 170"/>
+            <path d="M 196 82 l 7 8 l 14 -16" stroke="#d8451c" stroke-width="2.6"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================= 03 the result -->
+<section class="section" id="result">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="kicker">Before, after</h2>
+    </div>
+
+    <div class="window">
+      <div class="window-bar">
+        <span class="traffic" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="title">Photos · Edit · Best Expression</span>
+        <span></span>
+      </div>
+      <div class="compare" id="compare">
+        <div class="layer before" aria-hidden="true">
+          <svg viewBox="0 28 240 138">
+            <use href="#trio"/><use href="#a-open"/><use href="#a-smile"/><use href="#b-shut"/><use href="#b-flat"/><use href="#c-open"/><use href="#c-smile"/>
+            <rect x="36" y="60" width="56" height="70" rx="9" fill="none" stroke="#171512" stroke-width="1" opacity="0.28"/>
+            <rect x="101" y="58" width="54" height="66" rx="9" fill="none" stroke="#d8451c" stroke-width="1.4"/>
+            <rect x="164" y="80" width="48" height="58" rx="9" fill="none" stroke="#171512" stroke-width="1" opacity="0.28"/>
+          </svg>
+        </div>
+        <div class="layer after" aria-hidden="true">
+          <svg viewBox="0 28 240 138">
+            <use href="#trio"/><use href="#a-open"/><use href="#a-smile"/><use href="#b-open"/><use href="#b-grin"/><use href="#c-open"/><use href="#c-smile"/>
+          </svg>
+        </div>
+        <span class="tag tag-before" aria-hidden="true">Shot 1 of 5</span>
+        <span class="tag tag-after" aria-hidden="true">Saved</span>
+        <div class="divider" aria-hidden="true"></div>
+        <input type="range" min="0" max="100" value="66" step="0.1"
+               aria-label="Compare the original shot with the saved version">
+      </div>
+    </div>
+    <div class="compare-caption">
+      <span>Drag the handle. Left is the frame you kept; right is the same frame after borrowing shot four's face.</span>
+      <span>Drawn on purpose; nobody's kids belong on a marketing page. The App Store listing carries real screenshots.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================= 04 the blend -->
+<section class="section" id="blend">
+  <!-- ghosted before face, left margin -->
+  <svg class="deco deco-blend-left" aria-hidden="true" viewBox="0 0 220 270" fill="none" stroke-linecap="round">
+    <path d="M 18 270 C 25 214 62 186 110 186 C 158 186 195 214 202 270" stroke="rgba(23,21,18,0.08)" stroke-width="3.2"/>
+    <ellipse cx="110" cy="106" rx="58" ry="66" stroke="rgba(23,21,18,0.08)" stroke-width="3.2"/>
+    <path d="M 56 98 C 50 26 170 26 164 98 C 160 56 146 38 110 38 C 74 38 60 56 56 98 Z" fill="rgba(23,21,18,0.08)"/>
+    <path d="M 76 108 Q 87 119 98 108 M 122 108 Q 133 119 144 108" stroke="rgba(23,21,18,0.08)" stroke-width="3.2"/>
+    <path d="M 92 154 L 128 154" stroke="rgba(23,21,18,0.08)" stroke-width="3.2"/>
+  </svg>
+  <!-- ghosted after face with a faint pencil mark, right margin -->
+  <svg class="deco deco-blend-right" aria-hidden="true" viewBox="0 0 220 270" fill="none" stroke-linecap="round">
+    <path d="M 18 270 C 25 214 62 186 110 186 C 158 186 195 214 202 270" stroke="rgba(23,21,18,0.08)" stroke-width="3.2"/>
+    <ellipse cx="110" cy="106" rx="58" ry="66" stroke="rgba(23,21,18,0.08)" stroke-width="3.2"/>
+    <path d="M 56 98 C 50 26 170 26 164 98 C 160 56 146 38 110 38 C 74 38 60 56 56 98 Z" fill="rgba(23,21,18,0.08)"/>
+    <circle cx="87" cy="106" r="4.6" fill="rgba(23,21,18,0.08)"/>
+    <circle cx="133" cy="106" r="4.6" fill="rgba(23,21,18,0.08)"/>
+    <path d="M 84 146 Q 110 168 136 146" stroke="rgba(23,21,18,0.08)" stroke-width="3.2"/>
+    <path d="M 196 52 C 176 10 48 14 30 84 C 12 154 46 218 116 222 C 186 226 212 162 202 106 C 197 78 186 58 168 46" stroke="rgba(245,80,43,0.20)" stroke-width="7"/>
+  </svg>
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="kicker">The blend</h2>
+    </div>
+    <p class="craft-intro">A pasted-on face is easy to spot, so most of the
+    work went into the part where you can't tell. Every pixel still comes
+    from your own shots; nothing is invented.</p>
+
+    <ul class="blend-list">
+      <li>
+        <span class="k">Fit</span>
+        <span class="v">The new face is reshaped to sit exactly where the old
+        one sat, jawline and all.</span>
+      </li>
+      <li>
+        <span class="k">Blend</span>
+        <span class="v">Color and light are matched to the rest of the photo,
+        so no edge or tone shift gives it away.</span>
+      </li>
+      <li>
+        <span class="k">Hair</span>
+        <span class="v">Hairlines stay untouched on both people. A wrong
+        hairline is what ruins most face swaps.</span>
+      </li>
+      <li>
+        <span class="k">Bursts</span>
+        <span class="v">Shots taken seconds apart can swap the whole head,
+        hair and glasses included, with the background left alone.</span>
+      </li>
+      <li>
+        <span class="k">Check</span>
+        <span class="v">The extension grades its own result and keeps
+        adjusting until the swap blends in. The sliders stay there if you want
+        the last word.</span>
+      </li>
+    </ul>
+
+    <div class="index-grid">
+      <div class="index-col">
+        <ul class="index-list">
+          <li><span class="tick">→</span><p><b>Eyes only, or smile only.</b> Less change reads as more real.</p></li>
+          <li><span class="tick">→</span><p><b>Tweak Face.</b> Smile and eye-openness sliders for any single photo, no reference shot needed.</p></li>
+          <li><span class="tick">→</span><p class="spec-frag">Search window: 30 seconds out to 6 hours. Or hand-pick from the library.</p></li>
+          <li><span class="tick">→</span><p><b>Right-click adds a face</b> the detector missed.</p></li>
+        </ul>
+      </div>
+      <div class="index-col">
+        <ul class="index-list">
+          <li><span class="tick">→</span><p class="spec-frag">Saves at full resolution. EXIF, GPS and capture date ride along.</p></li>
+          <li><span class="tick">→</span><p><b>Live Photos get mined for extra takes;</b> only the sharp frames survive.</p></li>
+          <li><span class="tick">→</span><p><b>Sessions survive.</b> Re-open an edited photo and every swap is still adjustable.</p></li>
+          <li><span class="tick">→</span><p class="spec-frag">Hold Compare to flash the original. Double-click to zoom, up to 6×.</p></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================= 06 privacy -->
+<section class="section privacy" id="privacy">
+  <!-- ghosted photo frames resting in the dark -->
+  <svg class="deco deco-pv-a" aria-hidden="true" viewBox="0 0 200 172" fill="none" stroke-linecap="round">
+    <rect x="5" y="5" width="190" height="162" rx="14" stroke="rgba(245,241,232,0.14)" stroke-width="2.5"/>
+    <rect x="19" y="19" width="162" height="106" rx="8" stroke="rgba(245,241,232,0.10)" stroke-width="2"/>
+    <circle cx="100" cy="66" r="26" stroke="rgba(245,241,232,0.10)" stroke-width="2.5"/>
+    <circle cx="91" cy="62" r="2.4" fill="rgba(245,241,232,0.10)"/>
+    <circle cx="109" cy="62" r="2.4" fill="rgba(245,241,232,0.10)"/>
+    <path d="M 90 74 Q 100 82 110 74" stroke="rgba(245,241,232,0.10)" stroke-width="2.5"/>
+    <path d="M 19 146 L 86 146 M 152 146 L 181 146" stroke="rgba(245,241,232,0.12)" stroke-width="2.5"/>
+  </svg>
+  <svg class="deco deco-pv-b" aria-hidden="true" viewBox="0 0 200 172" fill="none" stroke-linecap="round">
+    <rect x="5" y="5" width="190" height="162" rx="14" stroke="rgba(245,241,232,0.12)" stroke-width="2.5"/>
+    <rect x="19" y="19" width="162" height="106" rx="8" stroke="rgba(245,241,232,0.09)" stroke-width="2"/>
+    <circle cx="100" cy="66" r="26" stroke="rgba(245,241,232,0.09)" stroke-width="2.5"/>
+    <path d="M 88 62 Q 92 66 96 62 M 104 62 Q 108 66 112 62" stroke="rgba(245,241,232,0.09)" stroke-width="2.2"/>
+    <path d="M 91 76 Q 100 82 109 76" stroke="rgba(245,241,232,0.09)" stroke-width="2.5"/>
+    <path d="M 19 146 L 74 146 M 140 146 L 181 146" stroke="rgba(245,241,232,0.11)" stroke-width="2.5"/>
+  </svg>
+  <div class="wrap">
+    <p class="kicker" style="margin-bottom:22px">Privacy</p>
+    <h2>Your photos stay home<em>.</em></h2>
+    <div class="privacy-cols">
+      <div>
+        <h3>No network code</h3>
+        <p>Best Expression makes no network connections. No analytics, no
+        crash reporting, no account, no subscription. The App Store privacy
+        label reads Data Not Collected because there is nothing to
+        collect.</p>
+      </div>
+      <div>
+        <h3>ML, kept on a leash</h3>
+        <p>Machine learning does exactly one job here: finding faces and their
+        landmarks, on your Mac. Every pixel in a result comes from your own
+        photos.</p>
+      </div>
+      <div>
+        <h3>Reversible, always</h3>
+        <p>Edits save non-destructively through the Photos extension system.
+        Revert to Original restores the untouched shot, even months later.</p>
+      </div>
+    </div>
+    <p class="privacy-foot">The whole policy fits on a postcard. <a href="privacy.html">Read it</a>.</p>
+  </div>
+</section>
+
+<!-- ============================================= 07 faq -->
+<section class="section" id="faq">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="kicker">Questions</h2>
+    </div>
+    <div class="faq">
+      <details>
+        <summary>What does a swap need?</summary>
+        <div class="answer"><p>At least one other photo of the same person taken
+        close in time. A burst or two consecutive shots works best. The
+        <b>Tweak Face</b> sliders are the exception: they work on any single
+        photo with a face in it.</p></div>
+      </details>
+      <details>
+        <summary>Can it open fully closed eyes without another shot?</summary>
+        <div class="answer"><p>No. The sliders reshape the face's own pixels and
+        they stop at subtle. Fully closed eyes need a real take to borrow from.
+        Nothing here invents an eyeball.</p></div>
+      </details>
+      <details>
+        <summary>What happens with Live Photos?</summary>
+        <div class="answer"><p>Two things. Their video frames serve as extra
+        takes, filtered down to the sharp ones. And when you save an edit over
+        a Live Photo, Photos keeps the edited still and switches off the
+        motion, as it does for every third-party editor. Duplicate the photo
+        first if you want a live copy too. Revert to Original brings the motion
+        back.</p></div>
+      </details>
+      <details>
+        <summary>Where does it show up?</summary>
+        <div class="answer"><p>Launch the app once after installing, then in
+        Photos: <b>Edit</b>, the <b>•••</b> button top right, <b>Best
+        Expression</b>.</p>
+        <p>Missing from the menu? System Settings → General → Login Items &amp;
+        Extensions → Photos Editing, switch it on, restart Photos. The <a
+        href="support.html">support page</a> walks through it.</p></div>
+      </details>
+      <details>
+        <summary>What does it cost?</summary>
+        <!-- PLACEHOLDER: price. Fill in the number once set in App Store Connect. -->
+        <div class="answer"><p>One price, paid once. No subscription, no tiers,
+        no account. The number lands with the App Store listing.</p></div>
+      </details>
+      <details>
+        <summary>Which Macs?</summary>
+        <div class="answer"><p>macOS 14 or later on Apple silicon. The pipeline
+        leans on Core Image and the Neural Engine, so it stays quick on
+        full-resolution photos.</p></div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================= closer -->
+<section class="section closer" id="get">
+  <div class="wrap">
+    <img class="app-icon" src="assets/icon-180.png" alt="The Best Expression app icon"
+      width="76" height="76">
+    <h2>The good take is <em>already in your library.</em></h2>
+    <div class="hero-cta">
+      <!-- PLACEHOLDER: same App Store link as the hero button. -->
+      <a class="btn btn-primary" id="store-link-2" href="#"
+         data-wait="Not on the store yet · soon">
+        <span class="label">Get it on the Mac App Store</span>
+        <span class="arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+    <p class="cta-note">In review. The link lands here the day it clears, and this page will say so.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <span class="mono">Pages</span>
+        <a href="privacy.html">Privacy policy</a>
+        <a href="support.html">Support</a>
+      </div>
+      <div class="foot-col">
+        <span class="mono">The extension</span>
+        <a href="#how">How it works</a>
+        <a href="#blend">The blend</a>
+        <a href="#faq">Questions</a>
+      </div>
+      <div class="foot-col">
+        <span class="mono">Elsewhere</span>
+        <!-- PLACEHOLDER: add real profile or repo links, or delete this column. -->
+        <a href="#" aria-disabled="true">App Store · soon</a>
+      </div>
+    </div>
+    <div class="colophon">
+      <span>© 2026 Ajin Man Tuladhar. Best Expression is an independent app.
+      Photos, Mac and Live Photos are trademarks of Apple Inc.</span>
+      <span>Set in Instrument Serif and San Francisco · No cookies, no
+      analytics on this page</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/site.js" defer></script>
+</body>
+</html>
