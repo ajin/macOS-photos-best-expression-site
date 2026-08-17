@@ -1,61 +1,33 @@
-# Best Expression site
+# Best Expression website
 
-Static site for GitHub Pages. Plain HTML and CSS, one small JS file, no
-framework, no build step. This folder is self-contained; every path is
-relative, so it works at `https://<user>.github.io/<repo>/` or on any
-static host.
+The website for **Best Expression**, a face swap extension for Apple
+Photos on the Mac. Someone always blinks; Best Expression borrows that
+person's better take from a shot seconds away and saves the photo you
+meant to take, entirely on your Mac.
 
-## Publish
+**Site:** https://ajin.github.io/macOS-photos-best-expression-site/
 
-This folder mirrors automatically to the public site repository
-(`ajin/macOS-photos-best-expression-site`) via
-`.github/workflows/publish-site.yml`: every push to `main` that touches
-`docs/` clones the site repo, rsyncs this folder over it, and pushes.
-One-time setup:
+- [Support](https://ajin.github.io/macOS-photos-best-expression-site/support.html)
+- [Privacy policy](https://ajin.github.io/macOS-photos-best-expression-site/privacy.html)
 
-1. Create a fine-grained personal access token (GitHub → Settings →
-   Developer settings → Fine-grained tokens) scoped to ONLY the site
-   repository, with **Contents: Read and write**.
-2. Add it to THIS repo as an Actions secret named `SITE_REPO_TOKEN`.
-3. On the site repository: Settings → Pages → Deploy from a branch →
-   `main` / root.
+## The app, briefly
 
-The workflow can also be run by hand from the Actions tab
-(workflow_dispatch). Commits in the site repo are authored by
-github-actions[bot], so no personal email lands in the public history.
+- Lives inside Apple Photos: Edit, then the ••• button
+- Finds each person's other takes from shots around the same moment
+- Every pixel comes from your own photos; nothing is invented
+- No network connections, no account, no analytics
+- macOS 14 or later on Apple silicon
+- Coming to the Mac App Store
 
-The URLs to paste into App Store Connect:
+## About this repository
 
-- Support URL: `https://ajin.github.io/macOS-photos-best-expression-site/support.html`
-- Privacy Policy URL: `https://ajin.github.io/macOS-photos-best-expression-site/privacy.html`
-- Marketing URL (optional): the site root
+Plain HTML and CSS with one small JavaScript file. No build step, no
+framework, no cookies, no analytics. The illustrations are line drawings
+on purpose; nobody's family belongs on a marketing page.
 
-## Placeholders to replace before or at launch
+This repository is a mirror, published automatically from the app's
+private repository. Pull requests here get overwritten by the next sync;
+if you spot a mistake on the site, please open an issue instead.
 
-Search the folder for `PLACEHOLDER`; each spot is marked with a comment.
-
-1. **App Store link**, `index.html`, three spots: the hero button
-   (`id="store-link"`), the closer button (`id="store-link-2"`), and the
-   footer "Elsewhere" column. Replace `href="#"` with the real
-   `https://apps.apple.com/app/idXXXXXXXXXX` URL. The "not live yet" click
-   behavior turns itself off once the href changes.
-2. **Support email**, `support.html`, one spot (the contact card). The
-   privacy page deliberately points at the support page, so the address
-   lives in exactly one place.
-3. **Price**, `index.html`, FAQ answer "What does it cost?" once pricing is
-   set in App Store Connect.
-4. **Open Graph image**, optional: drop a 1200×630 PNG at `assets/og.png`
-   and uncomment the tag in the `<head>` of `index.html`. The
-   `assets/icon-*.png` files are the real app icon (cropped to the squircle
-   from `icon_1024.png`); regenerate them if `Tools/make_icons.swift`
-   changes the icon.
-5. **Cta note lines** under the two store buttons say the review is in
-   progress; soften or delete them once the app is live.
-
-## Swapping in real screenshots
-
-The illustrations are deliberate (no real family photos, and App Review
-frowns on fake screenshots anyway). Once the App Store screenshot set
-exists, the before/after slider in `index.html` (`#result`) can take two
-`<img>` layers instead of the two inline SVGs; the CSS and JS already
-handle any content of equal aspect ratio.
+© 2026 Ajin Man Tuladhar. Photos, Mac and Live Photos are trademarks of
+Apple Inc.
