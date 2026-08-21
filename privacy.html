@@ -35,7 +35,8 @@
   transmit any personal data. Everything it does happens on your Mac.</p>
 
   <p>The app has no network connections, no servers, no analytics, no crash
-  reporting, no advertising, and no accounts.</p>
+  reporting, no advertising, and no accounts. Because it collects nothing,
+  there is no data on our side that could be breached or exposed.</p>
 
   <h2 id="photo-library">Photo library access</h2>
 
@@ -43,7 +44,10 @@
   other shots taken around the same time as the photo you are editing, so you
   can swap in a better expression. It reads photos only while you are editing,
   and it saves edits through Apple Photos as standard non-destructive
-  adjustments.</p>
+  adjustments. You can grant access to your whole library or, with limited
+  access, only to the photos of the moment you want to fix. You can withdraw
+  access at any time in System Settings > Privacy & Security > Photos, after
+  which the app cannot read any photos.</p>
 
   <h2 id="face-data">Face data</h2>
 
@@ -57,8 +61,15 @@
   shots of the same moment. It also computes hair and person segmentation
   masks used for blending. All of this is derived with Apple's Vision
   framework and open-source models running locally on your Mac. None of it is
-  used to identify who a person is, and the app keeps no database of
-  faces.</p>
+  used to identify who a person is or to build a profile of anyone, it is
+  never used for authentication, advertising, or marketing, and the app keeps
+  no database of faces.</p>
+
+  <p><b>Consent.</b> Face analysis runs only on a photo you open in the
+  extension yourself and on the nearby shots you allow it to search; nothing
+  is scanned in the background. Granting photo library access when the app
+  asks is the consent for that search, and withdrawing it in System Settings
+  stops it.</p>
 
   <p><b>Storage.</b> This in-memory face data exists only for the duration of
   the editing session and is discarded when you close the editor. It is never
@@ -72,9 +83,10 @@
   wherever your library is: on your Mac, and in iCloud Photos if you have that
   turned on, under your own Apple account.</p>
 
-  <p><b>Sharing.</b> Face data is not shared with anyone: not with us, not
-  with third parties, not with the developers of the open-source models. The
-  app makes no network connections at all.</p>
+  <p><b>Sharing.</b> Face data is not shared, disclosed, sold, or transferred
+  to anyone: not to us, not to third parties, not to the developers of the
+  open-source models. The app makes no network connections at all, and it
+  never moves face data off your Mac.</p>
 
   <p><b>Retention and deletion.</b> In-memory face data is deleted when the
   editing session ends. The saved edit recipe persists as long as the edit
