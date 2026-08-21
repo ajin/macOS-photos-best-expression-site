@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Privacy policy · Best Expression</title>
-<meta name="description" content="Best Expression does not collect, store, or transmit any personal data. The whole policy fits on a postcard.">
+<meta name="description" content="Best Expression does not collect, store on any server, or transmit any personal data. Faces are analyzed on your Mac only, and nothing derived from them leaves it.">
 <meta name="theme-color" content="#f5f1e8">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/icon-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="assets/icon-64.png">
@@ -29,24 +29,81 @@
 
 <main class="wrap page">
   <h1>Privacy policy</h1>
-  <p class="updated">Last updated August 17, 2026</p>
+  <p class="updated">Last updated August 21, 2026</p>
 
-  <p class="lede">Best Expression does not collect, store, or transmit any
-  personal data.</p>
+  <p class="lede">Best Expression does not collect, store on any server, or
+  transmit any personal data. Everything it does happens on your Mac.</p>
 
-  <p>Best Expression edits photos entirely on your Mac. It makes no network
-  connections: there are no servers, no analytics, no crash reporting, no
-  advertising, and no accounts.</p>
+  <p>The app has no network connections, no servers, no analytics, no crash
+  reporting, no advertising, and no accounts.</p>
 
-  <p>Photo library access serves one purpose: finding other shots taken around
-  the same time as the photo you are editing, so you can swap in a better
-  expression. Your photos, and everything computed from them (face positions,
-  quality scores), stay on your Mac.</p>
+  <h2 id="photo-library">Photo library access</h2>
 
-  <p>Questions: write to the address on the <a href="support.html">support
-  page</a>.</p>
+  <p>The app asks for access to your photo library for one purpose: finding
+  other shots taken around the same time as the photo you are editing, so you
+  can swap in a better expression. It reads photos only while you are editing,
+  and it saves edits through Apple Photos as standard non-destructive
+  adjustments.</p>
 
-  <p class="muted">That is the whole policy. There is no long version.</p>
+  <h2 id="face-data">Face data</h2>
+
+  <p>To do its job the app analyzes faces in your photos, entirely on your
+  Mac. This section explains exactly what that involves.</p>
+
+  <p><b>What is processed.</b> While you edit a photo, the app detects faces
+  and computes, in memory: face bounding boxes, facial landmark points,
+  expression scores (smile and eye openness), image quality scores, and short
+  numeric image signatures used only to match the same person across the few
+  shots of the same moment. It also computes hair and person segmentation
+  masks used for blending. All of this is derived with Apple's Vision
+  framework and open-source models running locally on your Mac. None of it is
+  used to identify who a person is, and the app keeps no database of
+  faces.</p>
+
+  <p><b>Storage.</b> This in-memory face data exists only for the duration of
+  the editing session and is discarded when you close the editor. It is never
+  written to a server. When you save an edit, Apple Photos stores the app's
+  edit recipe inside your own photo library as non-destructive adjustment
+  data, the same mechanism every Photos editing extension uses. That recipe
+  contains only: which of your photos a face was taken from, the normalized
+  rectangle of the face within the photo, and your slider settings. It
+  contains no landmark points, no image signatures, no biometric templates,
+  and no face images. Because it lives inside your photo library, it stays
+  wherever your library is: on your Mac, and in iCloud Photos if you have that
+  turned on, under your own Apple account.</p>
+
+  <p><b>Sharing.</b> Face data is not shared with anyone: not with us, not
+  with third parties, not with the developers of the open-source models. The
+  app makes no network connections at all.</p>
+
+  <p><b>Retention and deletion.</b> In-memory face data is deleted when the
+  editing session ends. The saved edit recipe persists as long as the edit
+  exists. Choosing Revert to Original in Photos deletes it, as does deleting
+  the photo. Uninstalling the app does not remove recipes already stored in
+  your library, because Photos keeps your edits; Revert to Original removes
+  them at any time.</p>
+
+  <h2 id="third-party">Third-party components</h2>
+
+  <p>The app bundles open-source face analysis models from the MediaPipe
+  project and the TensorFlow Lite runtime, both under the Apache 2.0 license.
+  They run entirely on your Mac and send nothing anywhere. License notices are
+  in the app's Acknowledgements screen.</p>
+
+  <h2 id="children">Children</h2>
+
+  <p>The app has no accounts and collects no data, including from
+  children.</p>
+
+  <h2 id="changes">Changes</h2>
+
+  <p>If this policy changes, the new version will be posted at this address
+  with an updated date.</p>
+
+  <h2 id="contact">Contact</h2>
+
+  <p>Questions: <a href="mailto:support@rxd7.com">support@rxd7.com</a>, or see
+  the <a href="support.html">support page</a>.</p>
 </main>
 
 <footer>
